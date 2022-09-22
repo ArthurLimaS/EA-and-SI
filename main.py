@@ -2,6 +2,7 @@ import numpy as np
 import dataset_loader as dl
 import fitness_functions as ff
 from algorithms.gwo import gwo
+from algorithms import pso
 
 # Definir seed fixa para que os resultados aleatórios sejam sempre os mesmos
 np.random.seed(seed=3)
@@ -23,17 +24,5 @@ lim_max = np.ones(shape=[pop_tam, dim]) * limites[1]
 pop = np.random.randint(dim, size=(pop_tam, dim))
 
 # Algoritmo
-print("Solução encontrada: {}".format(gwo.run(graph, pop, pop_tam, dim, max_gen, ff.separability, lim_min=lim_min, lim_max=lim_max)))
-
-
-"""
-
-
-"""
-
-"""
-subset1 = torch.tensor([0, 2, 3, 6], dtype=torch.long)
-subset2 = torch.tensor([0, 1, 4, 5, 6], dtype=torch.long)
-subgraph1 = graph.subgraph(subset1)
-subgraph2 = graph.subgraph(subset2)
-"""
+#print("Solução encontrada: {}".format(gwo.run(graph, pop, pop_tam, dim, max_gen, ff.separability, lim_min=lim_min, lim_max=lim_max)))
+print("Solução encontrada: {}".format(pso.run(graph, pop, pop_tam, dim, max_gen, ff.separability, lim_min=lim_min, lim_max=lim_max)))

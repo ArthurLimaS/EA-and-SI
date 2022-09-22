@@ -61,17 +61,8 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min=None, lim_ma
         big_c_delta = gaf.func_big_c(pop_tam)
 
         # Calculo de fitness
-        check_zeros = False
         for i in range(pop_tam):
-            try:
-                fitness[i] = fitness_funtion(graph, pop[i])
-            except:
-                print(pop[i])
-                check_zeros = True
-                break
-        
-        if check_zeros:
-            break
+            fitness[i] = fitness_funtion(graph, pop[i])
 
         # Determinar lobos alpha, beta e delta
         i_alpha = np.argmax(fitness)

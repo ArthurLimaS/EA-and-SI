@@ -2,8 +2,10 @@ from re import sub
 import numpy as np
 import torch
 
+
 def sphere(x):
     return np.sum(np.square(x))
+
 
 def separability(graph, ind, verbose=False):
     r_ind = np.round(ind) # arrendondar os valores do individuo (para o caso do algoritmo trabalhar com floats ao invés de inteiros)
@@ -45,11 +47,7 @@ def separability(graph, ind, verbose=False):
     return sep/len(comms)
 
 
-import dataset_loader as dl
-graph = dl.karate_club_loader()
-separability(graph, [0.04236882, 0.02815398, 0.02882322, 0.03810213, 0.03321059, 0.02815398,
-                     0.02815398, 0.04144604, 0.02815398, 0.03429771, 0.04089711, 0.07977667,
-                     0.03395767, 0.02815398, 1.05564629, 0.03428347, 0.03699782, 0.02815398,
-                     0.03254004, 0.02815398, 0.02815398, 0.02866817, 0.03206637, 0.02815398,
-                     0.02815398, 0.03309121, 0.03841159, 0.03896727, 0.04572288, 0.02815398,
-                     0.02815398, 0.0517095, 0.03515133, 0.0418465], verbose=True)
+def test_input():
+    import dataset_loader as dl
+    graph = dl.karate_club_loader()
+    print(separability(graph, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 0, 0, 0], verbose=True))

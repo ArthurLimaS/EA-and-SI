@@ -3,6 +3,7 @@ import torch
 from torch_geometric.data import Data
 from torch_geometric.datasets import KarateClub
 
+
 def dblp_loader():
     dblp = open("dblp.txt")
     dblp.readline() # pular primeira linha
@@ -14,19 +15,19 @@ def dblp_loader():
             prefix = ''
 
         if prefix == '#*': # paperTitle
-            a = 0
+            print("1")
         elif prefix == '#@': # Authors
-            a = 0
+            print("2")
         elif prefix == '#t': # Year
-            a = 0
+            print("3")
         elif prefix == '#c': # publication venue
-            a = 0
+            print("4")
         elif prefix == '#index': # index id of this paper
-            a = 0
+            print("5")
         elif prefix == '#%': # the id of references of this paper (there are multiple lines, with each indicating a reference)
-            a = 0
+            print("6")
         elif prefix == '#!': # abstract
-            a = 0
+            print("7")
 
     """
     count = 0
@@ -57,9 +58,3 @@ def karate_club_loader():
     
     data = Data(x=x, edge_index=edge_index)
     return data
-
-
-"""
-print(karate_club_loader())
-print(test_function())
-"""

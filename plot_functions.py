@@ -32,11 +32,11 @@ def plot_indexes(x, y, limites):
     plt.show()
 
 #plot_figma_iter(pop[:,0], pop[:,1], alpha, beta, delta)
-def plot_figma_iter(x, y, alpha, beta, delta):
+def plot_figma_iter(x, y, alpha, beta, delta, lim_min, lim_max):
     fig, ax = plt.subplots()
     ax.scatter(x, y)
-    ax.set(xlim=(np.min(x)-np.abs(np.min(x)), np.max(x)+np.abs(np.max(x))),
-            ylim=(np.min(y)-np.abs(np.min(y)), np.max(y)+np.abs(np.max(x))))
+    ax.set(xlim=(lim_min[0], lim_max[0]),
+            ylim=(lim_min[1], lim_max[1]))
     ax.set_xlabel("X1")
     ax.set_ylabel("X2")
     ax.grid(True)

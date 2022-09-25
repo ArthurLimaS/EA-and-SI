@@ -47,7 +47,24 @@ def separability(graph, ind, verbose=False):
     return sep/len(comms)
 
 
+def modularity(graph, ind):
+    r_ind = np.round(ind) # arrendondar os valores do individuo (para o caso do algoritmo trabalhar com floats ao invés de inteiros)
+
+    delta = np.zeros(shape=[len(graph.x), len(graph.x)])
+    for i in range(len(graph.x)):
+        for j in range(len(graph.x)):
+            if r_ind[i] == r_ind[j]:
+                delta[i][j] = 1
+
+    m = len(graph.edge_index[0])
+
+    res = (1/(2*m)) * ((graph.adj_matrix - graph.k_matrix) * delta)
+    big_q = np.sum(res)
+
+    return big_q
+
+
 def test_input():
     import dataset_loader as dl
     graph = dl.karate_club_loader()
-    print(separability(graph, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 0, 0, 0], verbose=True))
+    print(modularity(graph, [34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]))

@@ -38,7 +38,7 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min=None, lim_ma
     big_c_delta = func_big_c(pop_tam)
 
     # Calculo de fitness da população inicial
-    fitness = np.zeros(shape=(pop_tam))
+    fitness = np.zeros(shape=[pop_tam])
 
     for i in range(pop_tam):
         fitness[i] = fitness_funtion(graph, pop[i])

@@ -2,43 +2,43 @@ import numpy as np
 
 
 def roullete_selector(n, pop, fitness, max, tolerance=(3.4 * (10 ** -4))):
-  sel_pop = np.zeros(shape=(n, len(pop[0])))
-  
-  # Definir probabilidades
-  probabilities = np.zeros(shape=fitness.shape)
+    sel_pop = np.zeros(shape=(n, len(pop[0])))
 
-  if max:
-    probabilities = fitness/(np.sum(fitness) + tolerance)
-    probabilities[-1] += tolerance/(np.sum(fitness) + tolerance)
-    probabilities = np.cumsum(probabilities)
-  else:
-    probabilities = np.sum(fitness)/(fitness + tolerance)
-    probabilities[-1] += tolerance/(np.sum(fitness) + tolerance)
-    probabilities = probabilities/(np.sum(probabilities))
-    probabilities = np.cumsum(probabilities)
-  
-  # Selecionar n individuos
-  cnt_sel = 0
-  while cnt_sel < n:
-    r1 = np.random.rand(1)
-    indices1 = probabilities >= r1
-    s1 = np.argmax(indices1)
-    
-    iguais = True
-    s2 = -1
-    while iguais:
-      r2 = np.random.rand(1)
-      indices2 = probabilities >= r2
-      s2 = np.argmax(indices2)
-      if s1 != s2:
-        iguais = False
+    # Definir probabilidades
+    probabilities = np.zeros(shape=fitness.shape)
 
-    sel_pop[cnt_sel,:] = pop[s1, :]
-    cnt_sel += 1
-    sel_pop[cnt_sel,:] = pop[s2, :]
-    cnt_sel += 1
-  
-  return sel_pop
+    if max:
+        probabilities = fitness/(np.sum(fitness) + tolerance)
+        probabilities[-1] += tolerance/(np.sum(fitness) + tolerance)
+        probabilities = np.cumsum(probabilities)
+    else:
+        probabilities = np.sum(fitness)/(fitness + tolerance)
+        probabilities[-1] += tolerance/(np.sum(fitness) + tolerance)
+        probabilities = probabilities/(np.sum(probabilities))
+        probabilities = np.cumsum(probabilities)
+
+    # Selecionar n individuos
+    cnt_sel = 0
+    while cnt_sel < n:
+        r1 = np.random.rand(1)
+        indices1 = probabilities >= r1
+        s1 = np.argmax(indices1)
+
+        iguais = True
+        s2 = -1
+        while iguais:
+            r2 = np.random.rand(1)
+            indices2 = probabilities >= r2
+            s2 = np.argmax(indices2)
+            if s1 != s2:
+                iguais = False
+
+        sel_pop[cnt_sel,:] = pop[s1, :]
+        cnt_sel += 1
+        sel_pop[cnt_sel,:] = pop[s2, :]
+        cnt_sel += 1
+
+    return sel_pop
 
 
 def run(graph, pop_ini, pop_tam, dim, max_gen, fitness_function, max=True, cr=0.9, mr=0.01):

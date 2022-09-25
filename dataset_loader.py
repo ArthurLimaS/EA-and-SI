@@ -1,7 +1,7 @@
-from tokenize import String
 import torch
 from torch_geometric.data import Data
 from torch_geometric.datasets import KarateClub
+import numpy as np
 
 
 def dblp_loader():
@@ -57,4 +57,45 @@ def karate_club_loader():
     x = torch.tensor(x_aux, dtype=torch.float)
     
     data = Data(x=x, edge_index=edge_index)
-    return data
+
+    # Adjacency matrix
+    adj_matrix = np.ones(shape=[len(x), len(x)])
+    for i in range(len(x)):
+        for j in range(len(x)):
+            for index in range(len(edge_index[0])):
+                edge = edge_index[:,index]
+
+                if (edge[0] == i) \
+                    and (edge[1] == j):
+                    adj_matrix[i][j] = 1
+                    break
+                else:
+                    adj_matrix[i][j] = 0
+
+    # Edge-count matrix
+    k_matrix = np.zeros(shape=[len(x), len(x)])
+    for i in range(len(x)):
+        for j in range(len(x)):
+            ki = 0
+            for edge in edge_index[0]:
+                if edge == i:
+                    ki += 1
+            
+            kj = 0
+            for edge in edge_index[0]:
+                if edge == j:
+                    kj += 1
+            
+            k_matrix[i][j] = (ki*kj)/(2*len(edge_index[0]))
+
+    graph = Graph(data, adj_matrix, k_matrix)
+    return graph
+
+
+class Graph():
+    def __init__(self, graph, adj_matrix, k_matrix):
+        self.x = graph.x
+        self.edge_index = graph.edge_index
+        self.adj_matrix = adj_matrix
+        self.k_matrix = k_matrix
+        self.num_nodes = graph.num_nodes

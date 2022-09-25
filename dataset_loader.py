@@ -49,17 +49,9 @@ def test_function():
     return data
 
 
-def karate_club_loader():
-    temp_data = KarateClub().data
-    edge_index = temp_data.edge_index
+def get_adj_matrix(x, edge_index):
+    adj_matrix = np.zeros(shape=[len(x), len(x)])
 
-    x_aux = [[x] for x in range(len(temp_data.x))]
-    x = torch.tensor(x_aux, dtype=torch.float)
-    
-    data = Data(x=x, edge_index=edge_index)
-
-    # Adjacency matrix
-    adj_matrix = np.ones(shape=[len(x), len(x)])
     for i in range(len(x)):
         for j in range(len(x)):
             for index in range(len(edge_index[0])):
@@ -69,24 +61,38 @@ def karate_club_loader():
                     and (edge[1] == j):
                     adj_matrix[i][j] = 1
                     break
-                else:
-                    adj_matrix[i][j] = 0
+    
+    return adj_matrix
 
-    # Edge-count matrix
+
+def get_k_matrix(x, edge_index):
     k_matrix = np.zeros(shape=[len(x), len(x)])
+
     for i in range(len(x)):
         for j in range(len(x)):
             ki = 0
+            kj = 0
             for edge in edge_index[0]:
                 if edge == i:
                     ki += 1
-            
-            kj = 0
-            for edge in edge_index[0]:
                 if edge == j:
                     kj += 1
             
             k_matrix[i][j] = (ki*kj)/(2*len(edge_index[0]))
+
+
+def karate_club_loader():
+    temp_data = KarateClub().data
+    edge_index = temp_data.edge_index
+
+    x_aux = [[x] for x in range(len(temp_data.x))]
+    x = torch.tensor(x_aux, dtype=torch.float)
+    
+    data = Data(x=x, edge_index=edge_index)
+
+    adj_matrix = get_adj_matrix(x, edge_index)
+    
+    k_matrix = get_k_matrix(x, edge_index)
 
     graph = Graph(data, adj_matrix, k_matrix)
     return graph

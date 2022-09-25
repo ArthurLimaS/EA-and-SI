@@ -10,10 +10,10 @@ np.random.seed(seed=3)
 graph = dl.karate_club_loader()
 
 # Parametros
-pop_tam = 1000 # 1000 # tamanho da população
-dim = graph.num_nodes # número de entradas do problema
-max_gen = 50 # 50 # número max de gerações
-limites = [-0.5, (dim+.499)]
+pop_tam = 1000 # tamanho da população
+dim = graph.num_nodes # número de nós do grafo
+max_gen = 50 # # número max de gerações
+limites = [-0.5, (dim+.499)] # podem existir no máximo 'dim' comunidades, os limites são representados assim
 
 # Definição de limites do espaço de busca
 lim_min = np.ones(shape=[pop_tam, dim]) * limites[0]

@@ -51,6 +51,7 @@ def test_function():
 
 def get_adj_matrix(x, edge_index):
     adj_matrix = np.zeros(shape=[len(x), len(x)])
+    adj_matrix.astype(float)
 
     for i in range(len(x)):
         for j in range(len(x)):
@@ -67,6 +68,7 @@ def get_adj_matrix(x, edge_index):
 
 def get_k_matrix(x, edge_index):
     k_matrix = np.zeros(shape=[len(x), len(x)])
+    k_matrix.astype(float)
 
     for i in range(len(x)):
         for j in range(len(x)):
@@ -79,6 +81,8 @@ def get_k_matrix(x, edge_index):
                     kj += 1
             
             k_matrix[i][j] = (ki*kj)/(2*len(edge_index[0]))
+    
+    return k_matrix
 
 
 def karate_club_loader():

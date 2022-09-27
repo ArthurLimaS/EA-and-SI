@@ -7,6 +7,8 @@ def func_a(gen, max_gen):
 
 def func_big_a(a, pop_tam):
     A = np.zeros(shape=[pop_tam, pop_tam])
+    A.astype(float)
+
     for i in range(len(A)):
         A[i][i] = (2 * a * np.random.rand(1)) - a
     return A
@@ -14,6 +16,8 @@ def func_big_a(a, pop_tam):
 
 def func_big_c(pop_tam):
     C = np.zeros(shape=[pop_tam, pop_tam])
+    C.astype(float)
+
     for i in range(len(C)):
         C[i][i] = 2 * np.random.rand(1)
     return C
@@ -21,6 +25,8 @@ def func_big_c(pop_tam):
 
 def get_x(pop, pop_tam, dim, figma, big_a, big_c):
     x_figma = np.ones(shape=(pop_tam, dim))
+    x_figma.astype(float)
+
     for i in range(len(x_figma)):
         x_figma[i] = figma
 
@@ -39,11 +45,10 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min=None, lim_ma
 
     # Calculo de fitness da população inicial
     fitness = np.zeros(shape=[pop_tam])
+    fitness.astype(float)
 
     for i in range(pop_tam):
         fitness[i] = fitness_funtion(graph, pop[i])
-
-    #print(fitness)
 
     # Determinar lobos alpha, beta e delta
     i_alpha = np.argmax(fitness)
@@ -59,11 +64,8 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min=None, lim_ma
     i_delta = np.argmax(delta_fitness)
     delta = pop[i_delta]
 
-    # Plotar posição da primeira população
-    #plot_figma_iter(pop[:,0], pop[:,1], alpha, beta, delta, lim_min=lim_min[0][0:2], lim_max=lim_max[0][0:2])
-
     gen = 1
-    while gen < max_gen:
+    while gen <= max_gen:
         X1 = get_x(pop, pop_tam, dim, alpha, big_a_alpha, big_c_alpha)
         X2 = get_x(pop, pop_tam, dim, beta, big_a_beta, big_c_beta)
         X3 = get_x(pop, pop_tam, dim, delta, big_a_delta, big_c_delta)
@@ -102,9 +104,6 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min=None, lim_ma
         delta_fitness[i_beta] = -1
         i_delta = np.argmax(delta_fitness)
         delta = pop[i_delta]
-
-        #if gen % 10 == 0:
-            #plot_figma_iter(pop[:,0], pop[:,1], alpha, beta, delta, lim_min=lim_min[0][0:2], lim_max=lim_max[0][0:2])
 
         print("GEN: {} / RES: {}".format(gen, fitness_funtion(graph, alpha)))
         gen += 1

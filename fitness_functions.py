@@ -51,6 +51,8 @@ def modularity(graph, ind):
     round_ind = np.round(ind) # arrendondar os valores do individuo (para o caso do algoritmo trabalhar com floats ao invés de inteiros)
 
     delta = np.zeros(shape=[len(graph.x), len(graph.x)])
+    delta.astype(float)
+    
     for i in range(len(graph.x)):
         for j in range(len(graph.x)):
             if round_ind[i] == round_ind[j]:

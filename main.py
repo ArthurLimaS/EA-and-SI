@@ -2,9 +2,10 @@ import numpy as np
 import dataset_loader as dl
 import fitness_functions as ff
 from algorithms import de, ga, gwo, pso
+import pandas as pd
 
 # Definir seed fixa para que os resultados aleatórios sejam sempre os mesmos
-np.random.seed(seed=3)
+#np.random.seed(seed=3)
 
 # Carregar o grafo a ser utilizado
 graph = dl.karate_club_loader()
@@ -26,14 +27,14 @@ pop = pop.astype(float)
 # Algoritmo
 solucoes = []
 
-print("GWO")
+#print("GWO")
 solucoes.append(gwo.run(graph, np.copy(pop), pop_tam, dim, max_gen, ff.modularity, lim_min=lim_min, lim_max=lim_max))
-print("PSO")
+print("\nPSO")
 solucoes.append(pso.run(graph, np.copy(pop), pop_tam, dim, max_gen, ff.modularity, lim_min=lim_min, lim_max=lim_max))
-print("GA")
+print("\nGA")
 solucoes.append(ga.run(graph, np.copy(pop), pop_tam, dim, max_gen, ff.modularity))
-print("DE")
-solucoes.append(de.run(graph, np.copy(pop), pop_tam, dim, max_gen, ff.modularity))
+print("\nDE")
+solucoes.append(de.run(graph, np.copy(pop), pop_tam, dim, max_gen, ff.modularity, lim_min=lim_min, lim_max=lim_max))
 
 print("Solução encontrada GWO: {}".format(solucoes[0]))
 print("Solução encontrada PSO: {}".format(solucoes[1]))

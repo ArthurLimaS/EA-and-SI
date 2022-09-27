@@ -5,6 +5,7 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min, lim_max, c_
 
     # Fitness evaluation
     fitness = np.zeros(shape=[pop_tam])
+    fitness.astype(float)
 
     for i in range(pop_tam):
         fitness[i] = fitness_funtion(graph, pop[i])
@@ -20,6 +21,7 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min, lim_max, c_
         cr_2 = np.random.rand(pop_tam, dim) * c_2
 
         tmp_best_individual = np.zeros(shape=[pop_tam, dim])
+        tmp_best_individual.astype(float)
         tmp_best_individual[0:pop_tam, :] = local_best_population[best_index, :]
 
         velocities = (w * velocities) \
@@ -43,5 +45,6 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min, lim_max, c_
 
         best_index = np.argmax(local_best_fitness)
 
-        print('Generation ' + str(generation) + ": " + str(local_best_fitness[best_index]))
+        print("GEN: {} / RES: {}".format(generation+1, local_best_fitness[best_index]))
+    
     return pop[best_index]

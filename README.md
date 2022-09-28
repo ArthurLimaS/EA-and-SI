@@ -1,2 +1,2 @@
 # EA-and-SI
-Final project of the university class "Introduction to Evolutionary Algorithms"
+Projeto realizado na cadeira "Introdução a Computação Evolucionária" do curso de Bacharelado em Ciência da Computação - UFRPE

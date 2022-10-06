@@ -1,6 +1,10 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
-def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min, lim_max, c_1=2, c_2=2, w=0.7):
+def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min, lim_max, c_1=2, c_2=2, w=0.7, rep=0):
+    # Gráfico
+    y = []
+
     velocities = (np.random.rand(pop_tam, dim) * ((lim_max - lim_min) / 10)) + lim_min
 
     # Fitness evaluation
@@ -45,6 +49,7 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min, lim_max, c_
 
         best_index = np.argmax(local_best_fitness)
 
+        y.append(local_best_fitness[best_index])
         print("GEN: {} / RES: {}".format(generation+1, local_best_fitness[best_index]))
     
-    return pop[best_index]
+    return pop[best_index], y

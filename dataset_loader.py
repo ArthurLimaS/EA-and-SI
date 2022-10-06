@@ -46,7 +46,13 @@ def test_function():
     x = torch.tensor([[0], [1], [2], [3], [4], [5], [6]], dtype=torch.float)
 
     data = Data(x=x, edge_index=edge_index)
-    return data
+
+    adj_matrix = get_adj_matrix(x, edge_index)
+    
+    k_matrix = get_k_matrix(x, edge_index)
+
+    graph = Graph(data, adj_matrix, k_matrix)
+    return graph
 
 
 def get_adj_matrix(x, edge_index):

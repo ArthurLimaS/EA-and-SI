@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def func_a(gen, max_gen):
@@ -10,7 +11,7 @@ def func_big_a(a, pop_tam):
     A.astype(float)
 
     for i in range(len(A)):
-        A[i][i] = (2 * a * np.random.rand(1)) - a
+        A[i][i] = (2 * a * np.random.rand()) - a
     return A
 
 
@@ -33,7 +34,10 @@ def get_x(pop, pop_tam, dim, figma, big_a, big_c):
     return x_figma - np.dot(big_a, (np.dot(big_c, x_figma) - pop))
 
 
-def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min=None, lim_max=None):
+def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min=None, lim_max=None, rep=0):
+    # Gráfico
+    y = []
+
     # Inicializar variáveis a, A e C
     a = func_a(0, max_gen)
     big_a_alpha = func_big_a(a, pop_tam)
@@ -105,7 +109,8 @@ def run(graph, pop, pop_tam, dim, max_gen, fitness_funtion, lim_min=None, lim_ma
         i_delta = np.argmax(delta_fitness)
         delta = pop[i_delta]
 
+        y.append(fitness_funtion(graph, alpha))
         print("GEN: {} / RES: {}".format(gen, fitness_funtion(graph, alpha)))
         gen += 1
     
-    return alpha
+    return alpha, y

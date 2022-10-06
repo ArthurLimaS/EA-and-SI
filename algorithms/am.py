@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def roullete_selector(n, pop, fitness, max, tolerance=(3.4 * (10 ** -4))):
@@ -80,6 +81,26 @@ def mutation(pop_tam, dim, mr, n_pop, comms_count):
                 n_pop[i][j] = np.random.randint(0, comms_count)
 
 
+def local_search(graph, n_pop, fitness, fitness_function, comms_count):
+    comms = np.arange(comms_count)
+
+    for i in range(len(n_pop)):
+        n_ind = n_pop[i].copy()
+        best_fitness = fitness[i].copy()
+        
+        for j in range(len(n_ind)):   # arrendondar os valores do individuo (para o caso do algoritmo trabalhar com floats ao invés de inteiros)
+            ind_copy = n_pop[i].copy()
+            for comm in comms:
+                ind_copy[j] = comm
+
+                n_fitness = fitness_function(graph, ind_copy)
+
+                if n_fitness > best_fitness:
+                    n_ind = ind_copy.copy()
+            
+        n_pop[i] = n_ind
+
+
 def run(graph, pop_ini, pop_tam, dim, max_gen, fitness_function, comms_count, max=True, cr=0.9, mr=0.01, rep=0):
     # Gráfico
     y = []
@@ -116,7 +137,10 @@ def run(graph, pop_ini, pop_tam, dim, max_gen, fitness_function, comms_count, ma
 
         # 3.2.2 Mutation
         mutation(pop_tam, dim, mr, n_pop, comms_count)
-        
+
+        # Local Search
+        local_search(graph, n_pop, fitness, fitness_function, comms_count)
+
         # 3.3 Armazenar os novos indivíduos em uma nova população
         pop = np.copy(n_pop)
 
@@ -133,14 +157,4 @@ def run(graph, pop_ini, pop_tam, dim, max_gen, fitness_function, comms_count, ma
         print("GEN: {} / RES: {}".format(gen, fitness_function(graph, pop[best_index])))
         gen += 1
 
-    #x = [i+1 for i in range(max_gen)]
-    #plt.plot(x, y)
-    #plt.title("GA")
-    #plt.ylabel("modularity value")
-    #plt.ylim(0, 0.5)
-    #plt.xlabel("generation")
-    #plt.savefig("graphs/GA_{}.png".format(rep+1))
-    #plt.close()
-
-    
     return pop[best_index], y

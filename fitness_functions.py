@@ -48,14 +48,17 @@ def separability(graph, ind, verbose=False):
 
 
 def modularity(graph, ind):
-    round_ind = np.round(ind) # arrendondar os valores do individuo (para o caso do algoritmo trabalhar com floats ao invés de inteiros)
+    # Garantia
+    ind_copy = ind.copy()
+    for i in range(len(ind_copy)):   # arrendondar os valores do individuo (para o caso do algoritmo trabalhar com floats ao invés de inteiros)
+        ind_copy[i] = round(ind_copy[i])
 
     delta = np.zeros(shape=[len(graph.x), len(graph.x)])
     delta.astype(float)
-    
+
     for i in range(len(graph.x)):
         for j in range(len(graph.x)):
-            if round_ind[i] == round_ind[j]:
+            if ind_copy[i] == ind_copy[j]:
                 delta[i][j] = 1
 
     m = len(graph.edge_index[0])
